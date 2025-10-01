@@ -7,7 +7,7 @@ const me = {
   role: "Intern Java Developer • Full-stack Developer",
   location: "Bát Khối, Long Biên, Hà Nội",
   avatar: "https://github.com/dnclou6.png",
-  bio: "Sinh viên năm 2 chuyên ngành Software Development tại FPT Polytechnic (GPA 3.81/4.0). Đang tìm kiếm cơ hội thực tập Java Backend để áp dụng kiến thức Spring Boot vào hệ thống thực tế. Mục tiêu dài hạn trở thành Senior Backend Developer với kỹ năng thiết kế hệ thống vững chắc.",
+  bio: "Sinh viên năm 2 chuyên ngành Software Development tại FPT Polytechnic (GPA 3.8/4.0). Đang tìm kiếm cơ hội thực tập Java Backend để áp dụng kiến thức Spring Boot vào hệ thống thực tế. Mục tiêu dài hạn trở thành Senior Backend Developer với kỹ năng thiết kế hệ thống vững chắc.",
   shortBio: "Passionate Java Developer với kinh nghiệm Full-stack, đang tìm kiếm cơ hội thực tập để phát triển sự nghiệp.",
   links: [
     { label: "GitHub", href: "https://github.com/dnclou6", icon: "🔗" },
@@ -114,7 +114,7 @@ const me = {
   education: {
     school: "FPT Polytechnic College",
     major: "Software Development",
-    gpa: "GPA 3.81/4.0",
+    gpa: "GPA 3.8/4.0",
     years: "2023 – 2025",
     status: "Sinh viên năm 2"
   },
@@ -126,7 +126,7 @@ const me = {
   ],
   contactEmail: "duclong0910@gmail.com",
   achievements: [
-    { title: "GPA 3.81/4.0", desc: "Thành tích học tập xuất sắc", icon: "🏆" },
+    { title: "GPA 3.8/4.0", desc: "Thành tích học tập xuất sắc", icon: "🏆" },
     { title: "4+ Projects", desc: "Dự án thực tế hoàn thành", icon: "💻" },
     { title: "Full-stack", desc: "Kinh nghiệm toàn diện", icon: "⚡" },
     { title: "AI Integration", desc: "Tích hợp AI trong dự án", icon: "🤖" }
