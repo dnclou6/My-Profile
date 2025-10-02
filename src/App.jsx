@@ -16,7 +16,7 @@ const me = {
   links: [
     { label: "GitHub", href: "https://github.com/dnclou6", icon: "🔗" },
     { label: "LinkedIn", href: "https://www.linkedin.com/in/dnclou6", icon: "💼" },
-    { label: "Email", href: "mailto:duclong0910@gmail.com", icon: "📧" }
+    { label: "Email", href: "mailto:phdlong2006@gmail.com", icon: "📧" }
   ],
   badges: [
     "Java Core", "Spring Boot", "Spring Security", "Spring JPA", "Spring MVC",
