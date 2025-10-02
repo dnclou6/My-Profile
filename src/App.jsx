@@ -406,8 +406,9 @@ export default function App() {
           || keys.find(k => k.toLowerCase().endsWith('cv.png'));
         const matchPdfKey = keys.find(k => k.toLowerCase().includes('intern java developer') && k.toLowerCase().endsWith('.pdf'))
           || keys.find(k => k.toLowerCase().endsWith('cv.pdf'));
-        if (matchImgKey) assetImgUrl = allAssets[matchImgKey];
-        if (matchPdfKey) assetPdfUrl = allAssets[matchPdfKey];
+        const toUrl = (val) => (typeof val === 'string' ? val : (val && typeof val === 'object' && 'default' in val ? val.default : ''));
+        if (matchImgKey) assetImgUrl = toUrl(allAssets[matchImgKey]);
+        if (matchPdfKey) assetPdfUrl = toUrl(allAssets[matchPdfKey]);
       } catch (_) {}
 
       const [pdfUrl, imgUrl] = await Promise.all([
