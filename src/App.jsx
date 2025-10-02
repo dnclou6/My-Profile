@@ -315,6 +315,9 @@ export default function App() {
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
   const [isFormSubmitted, setIsFormSubmitted] = useState(false);
   const [visibleSections, setVisibleSections] = useState(new Set(['home']));
+  const [cvPdfUrl, setCvPdfUrl] = useState('');
+  const [cvImgUrl, setCvImgUrl] = useState('');
+  const [isCvOpen, setIsCvOpen] = useState(false);
   
   const typingText = useTypingEffect(me.shortBio, 50);
 
@@ -359,6 +362,75 @@ export default function App() {
       setIsMenuOpen(false);
     }
   };
+
+  // Determine CV URLs (PNG preview + PDF) at runtime with fallbacks
+  useEffect(() => {
+    let isMounted = true;
+    const probe = async () => {
+      const pdfCandidates = [
+        '/cv.pdf',
+        '/assets/cv.pdf',
+        '/Phạm Đức Long - Intern Java Developer (2).pdf',
+        '/assets/Phạm Đức Long - Intern Java Developer (2).pdf',
+        '/Phạm Đức Long - Intern Java Developer (2).pdf',
+        '/assets/Phạm Đức Long - Intern Java Developer (2).pdf',
+      ];
+      const imgCandidates = [
+        '/Phạm Đức Long - Intern Java Developer.png',
+        '/assets/Phạm Đức Long - Intern Java Developer.png',
+        '/Phạm Đức Long - Intern Java Developer.png',
+        '/assets/Phạm Đức Long - Intern Java Developer.png',
+        '/cv.png',
+        '/assets/cv.png',
+      ];
+
+      const tryFind = async (candidates) => {
+        for (const raw of candidates) {
+          const url = encodeURI(raw);
+          try {
+            const res = await fetch(url, { method: 'HEAD' });
+            if (res.ok) return url;
+          } catch (_) {}
+        }
+        return '';
+      };
+
+      // First, try to find via vite assets mapping for better unicode handling
+      let assetImgUrl = '';
+      let assetPdfUrl = '';
+      try {
+        const allAssets = import.meta.glob('./assets/*', { eager: true, as: 'url' });
+        const keys = Object.keys(allAssets);
+        const matchImgKey = keys.find(k => k.toLowerCase().includes('intern java developer') && k.toLowerCase().endsWith('.png'))
+          || keys.find(k => k.toLowerCase().endsWith('cv.png'));
+        const matchPdfKey = keys.find(k => k.toLowerCase().includes('intern java developer') && k.toLowerCase().endsWith('.pdf'))
+          || keys.find(k => k.toLowerCase().endsWith('cv.pdf'));
+        if (matchImgKey) assetImgUrl = allAssets[matchImgKey];
+        if (matchPdfKey) assetPdfUrl = allAssets[matchPdfKey];
+      } catch (_) {}
+
+      const [pdfUrl, imgUrl] = await Promise.all([
+        assetPdfUrl ? Promise.resolve(assetPdfUrl) : tryFind(pdfCandidates),
+        assetImgUrl ? Promise.resolve(assetImgUrl) : tryFind(imgCandidates),
+      ]);
+
+      if (isMounted) {
+        setCvPdfUrl(pdfUrl);
+        setCvImgUrl(imgUrl);
+      }
+    };
+    probe();
+    return () => { isMounted = false; };
+  }, []);
+
+  // Close modal on ESC
+  useEffect(() => {
+    const onKey = (e) => {
+      if (e.key === 'Escape') setIsCvOpen(false);
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, []);
 
   // Handle form submission
   const handleFormSubmit = (e) => {
@@ -466,6 +538,11 @@ export default function App() {
               >
                 Liên hệ ngay
               </button>
+              {(cvImgUrl || cvPdfUrl) && (
+                <button className="btn btn-secondary" onClick={() => setIsCvOpen(true)}>
+                  Xem CV
+                </button>
+              )}
             </div>
             <div className="hero-links">
               {me.links.map(link => (
@@ -493,6 +570,41 @@ export default function App() {
           <div className="scroll-arrow"></div>
         </div>
       </section>
+
+      {/* CV Modal */}
+      {isCvOpen && (
+        <div className="modal-overlay" onClick={() => setIsCvOpen(false)}>
+          <div className="modal" onClick={(e) => e.stopPropagation()}>
+            <div className="modal-header">
+              <h3>CV của tôi</h3>
+              <button className="modal-close" onClick={() => setIsCvOpen(false)}>×</button>
+            </div>
+            <div className="modal-body">
+              {cvImgUrl ? (
+                <img
+                  src={cvImgUrl}
+                  alt="CV Preview"
+                  className="cv-preview"
+                  onError={(e) => {
+                    // Hide broken image gracefully
+                    e.currentTarget.style.display = 'none';
+                  }}
+                />
+              ) : (
+                <p>Không tìm thấy ảnh xem trước.</p>
+              )}
+            </div>
+            <div className="modal-actions">
+              {cvPdfUrl && (
+                <a className="btn btn-primary" href={cvPdfUrl} download={"Pham-Duc-Long-CV.pdf"}>
+                  Tải PDF
+                </a>
+              )}
+              <button className="btn btn-secondary" onClick={() => setIsCvOpen(false)}>Đóng</button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* About Section */}
       <section id="about" className="about">
