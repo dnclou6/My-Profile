@@ -1,4 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
+import quanLyBaiVietImg from "./assets/quan-ly-bai-viet.png";
+import banAoImg from "./assets/ban-ao.png";
+import banHangImg from "./assets/ban-hang.png";
 import "./styles.css";
 
 /* ========= DATA: kết hợp từ CV + GitHub ========= */
@@ -7,8 +10,8 @@ const me = {
   role: "Backend Developer",
   location: "Bát Khối, Long Biên, Hà Nội",
   avatar: "https://github.com/dnclou6.png",
-  bio: "Tốt nghiệp chuyên ngành Phát triển phần mềm tại FPT Polytechnic (GPA 3.8/4.0). Đang tìm kiếm cơ hội thực tập Java Backend để áp dụng kiến thức Spring Boot vào hệ thống thực tế. Mục tiêu dài hạn trở thành Senior Backend Developer với kỹ năng thiết kế hệ thống vững chắc.",
-  shortBio: "Đang tìm kiếm cơ hội thực tập để phát triển sự nghiệp.",
+  bio: "Tốt nghiệp chuyên ngành Phát triển phần mềm tại FPT Polytechnic (GPA 3.8/4.0). Đang tìm kiếm cơ hội việc làm Java Backend để áp dụng kiến thức Spring Boot vào hệ thống thực tế. Mục tiêu dài hạn trở thành Senior Backend Developer với kỹ năng thiết kế hệ thống vững chắc.",
+  shortBio: "Đang tìm kiếm cơ hội việc làm để phát triển sự nghiệp.",
   links: [
     { label: "GitHub", href: "https://github.com/dnclou6", icon: "🔗" },
     { label: "LinkedIn", href: "https://www.linkedin.com/in/dnclou6", icon: "💼" },
@@ -31,7 +34,7 @@ const me = {
       tags: ["React", "Spring Boot", "Spring Security", "SQL Server", "JavaScript"],
       repo: "https://github.com/dnclou6/Article-Management",
       impact: ["Quản lý bài viết hiệu quả", "Phân quyền rõ ràng", "Lưu trữ và tìm kiếm dễ dàng"],
-      image: "https://via.placeholder.com/400x250/0ea5a4/ffffff?text=Article+Management",
+      image: quanLyBaiVietImg,
       featured: true
     },
     {
@@ -45,11 +48,11 @@ const me = {
       tags: ["Spring Boot", "Thymeleaf", "JavaScript", "SQL Server", "AI Integration"],
       repo: "https://github.com/dnclou6/Clothing-Manager",
       impact: ["Quy trình bán hàng mượt mà", "Kiểm soát tồn kho thông minh", "Báo cáo chi tiết"],
-      image: "https://via.placeholder.com/400x250/8b5cf6/ffffff?text=Clothing+Store",
+      image: banAoImg,
       featured: true
     },
     {
-      name: "SOF308-xuong (Vue.js)",
+      name: "SOF308-xuong",
       ksp: "Luyện tập Vue.js components & state management",
       desc: [
         "Dự án học tập Vue.js với focus vào component architecture và state management.",
@@ -58,7 +61,7 @@ const me = {
       tags: ["Vue.js", "JavaScript", "Component Architecture"],
       repo: "https://github.com/dnclou6/SOF308-xuong",
       impact: ["Hiểu rõ Vue.js ecosystem", "Cấu trúc code rõ ràng", "Tăng tốc development"],
-      image: "https://via.placeholder.com/400x250/16a34a/ffffff?text=Vue.js+Project",
+      image: banHangImg,
       featured: false
     }
   ],
@@ -72,16 +75,16 @@ const me = {
     ],
     Frontend: [
       { name: "HTML5/CSS3/JS", level: 80, color: "#f97316" },
-      { name: "React", level: 70, color: "#06b6d4" },
+      { name: "React", level: 60, color: "#06b6d4" },
       { name: "Vue.js", level: 65, color: "#10b981" },
-      { name: "Thymeleaf", level: 60, color: "#6366f1" },
+      { name: "Thymeleaf", level: 75, color: "#6366f1" },
       { name: "Bootstrap", level: 75, color: "#8b5cf6" }
     ],
     "Database & Tools": [
       { name: "SQL Server", level: 70, color: "#dc2626" },
-      { name: "MySQL", level: 65, color: "#ea580c" },
+      { name: "MySQL", level: 60, color: "#ea580c" },
       { name: "Postman", level: 75, color: "#f59e0b" },
-      { name: "Git/GitHub", level: 80, color: "#374151" },
+      { name: "Git/GitHub", level: 80, color: "#000000ff" },
       { name: "IntelliJ/VS Code", level: 85, color: "#7c3aed" }
     ]
   },
@@ -128,7 +131,29 @@ const me = {
   achievements: [
     { title: "GPA 3.8/4.0", desc: "Thành tích học tập xuất sắc", icon: "🏆" },
     { title: "4+ Projects", desc: "Dự án thực tế hoàn thành", icon: "💻" },
-    { title: "AI Integration", desc: "Tích hợp AI trong dự án", icon: "🤖" }
+    { title: "AI Integration", desc: "Tích hợp AI trong dự án", icon: "🤖" },
+    { title: "Academic Awards", desc: "Top 100 • Top 150 trong nhiều học kỳ", icon: "🥇" }
+  ],
+  softSkills: [
+    "Có thể đọc và hiểu tiếng Anh ở mức cơ bản.",
+    "Hòa đồng, thân thiện, nhiệt tình, ham học hỏi trong công việc."
+  ],
+  awards: [
+    {
+      title: "Top 100 sinh viên xuất sắc học kỳ",
+      semesters: [
+        "Spring 2022",
+        "Summer 2022",
+        "Spring 2023",
+        "Summer 2022",
+        "Fall 2023",
+        "Spring 2024"
+      ]
+    },
+    {
+      title: "Top 150 sinh viên xuất sắc học kỳ",
+      semesters: ["Fall 2024"]
+    }
   ]
 };
 
@@ -225,6 +250,7 @@ function SkillBar({ skill, isVisible }) {
 /* ========= Project Card Component ========= */
 function ProjectCard({ project, index, isVisible }) {
   const [isHovered, setIsHovered] = useState(false);
+  const fallbackSrc = '/vite.svg';
 
   return (
     <div 
@@ -234,7 +260,19 @@ function ProjectCard({ project, index, isVisible }) {
       onMouseLeave={() => setIsHovered(false)}
     >
       <div className="project-image">
-        <img src={project.image} alt={project.name} />
+        <img 
+          src={project.image} 
+          alt={project.name}
+          loading="lazy"
+          onError={(e) => {
+            const img = e.currentTarget;
+            if (img.src !== window.location.origin + fallbackSrc) {
+              img.src = fallbackSrc;
+              img.style.objectFit = 'contain';
+              img.style.background = 'var(--bg-tertiary)';
+            }
+          }}
+        />
         <div className="project-overlay">
           <a href={project.repo} target="_blank" rel="noopener noreferrer" className="project-link">
             <span>View Project</span>
@@ -466,6 +504,7 @@ export default function App() {
           <div className="about-content">
             <div className="about-text">
               <p>{me.bio}</p>
+              <hr className="about-divider" />
               <div className="about-stats">
                   {me.achievements.map((achievement, index) => (
                     <AchievementCard 
@@ -477,6 +516,11 @@ export default function App() {
                   ))}
               </div>
             </div>
+            {/* Middle decorative column */}
+            <div className="about-mid">
+              <div className="mid-icon">✨</div>
+              <div className="mid-line"></div>
+            </div>
             <div className="about-education">
               <div className="education-card">
                 <h3>🎓 Học vấn</h3>
@@ -486,6 +530,15 @@ export default function App() {
                   <p className="education-years">{me.education.years}</p>
                   <p className="education-gpa">{me.education.gpa}</p>
                 </div>
+              </div>
+              {/* Soft Skills Card */}
+              <div className="education-card softskills-card">
+                <h3>🤝 Kỹ năng mềm</h3>
+                <ul className="softskills-list">
+                  {me.softSkills.map((s, i) => (
+                    <li key={i} className="softskills-item">{s}</li>
+                  ))}
+                </ul>
               </div>
             </div>
           </div>
@@ -631,7 +684,7 @@ export default function App() {
       {/* Footer */}
       <footer className="footer">
         <div className="container">
-          <p>&copy; 2025 {me.name}. Made with ❤️ and React.</p>
+          <p>&copy; {me.name} | Portfolio</p>
         </div>
       </footer>
     </div>

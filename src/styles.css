@@ -350,7 +350,8 @@ p {
 .hero-description {
   font-size: 1.25rem;
   margin-bottom: 2rem;
-  opacity: 0.9;
+  /* Use solid color instead of element opacity to improve readability in light mode */
+  color: #ffffff;
   min-height: 1.5em;
 }
 
@@ -509,15 +510,15 @@ p {
 
 /* ========= About Section ========= */
 .about {
-  padding: 6rem 0;
+  padding: 5rem 0;
   background: var(--bg-secondary);
 }
 
 .about-content {
   display: grid;
-  grid-template-columns: 2fr 1fr;
-  gap: 4rem;
-  align-items: start;
+  grid-template-columns: 1.4fr 40px 1fr; /* thêm cột giữa nhỏ 40px */
+  gap: 2.5rem;
+  align-items: stretch; /* cho cột giữa kéo full chiều cao */
 }
 
 .about-text p {
@@ -526,9 +527,96 @@ p {
   margin-bottom: 2rem;
 }
 
+/* Căn giữa khối nội dung bên trái theo chiều dọc so với cột phải */
+.about-text {
+  align-self: center;
+}
+
+.about-divider {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 1rem 0 2rem;
+}
+
+/* Decorative middle column */
+.about-mid {
+  width: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-self: stretch; /* kéo bằng chiều cao hàng */
+}
+
+.mid-icon {
+  font-size: 1.25rem;
+  margin-top: 0.25rem;
+}
+
+.mid-line {
+  margin-top: 0.5rem;
+  width: 2px;
+  height: 100%;
+  background: linear-gradient(180deg, transparent, var(--primary), transparent);
+  border-radius: 2px;
+}
+
+/* ========= Awards ========= */
+.awards {
+  margin-top: 2rem;
+}
+
+.awards h3 {
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+}
+
+.awards-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.award-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+
+.award-dot {
+  width: 10px;
+  height: 10px;
+  background: #f4c7b9;
+  border-radius: 50%;
+  margin-top: 0.6rem;
+}
+
+.award-content {
+  flex: 1;
+}
+
+.award-title {
+  color: var(--text-secondary);
+  margin-bottom: 0.5rem;
+}
+
+.award-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.25rem;
+}
+
+.award-chip {
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.dark .award-chip {
+  color: #e2e8f0;
+}
+
 .about-stats {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(2, minmax(260px, 1fr));
   gap: 1.5rem;
   margin-top: 2rem;
 }
@@ -543,6 +631,12 @@ p {
   transition: all 0.3s ease;
   opacity: 0;
   transform: translateY(20px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 0.75rem;
+  min-height: 200px;
 }
 
 .achievement-card.animate-in {
@@ -573,18 +667,68 @@ p {
 
 .education-card {
   background: var(--bg-primary);
-  padding: 2rem;
+  padding: 1.5rem 1.75rem;
   border-radius: 1rem;
   box-shadow: 0 4px 6px var(--shadow);
   border: 1px solid var(--border);
-  position: sticky;
-  top: 2rem;
+}
+
+/* Cột phải: phân bố 2 thẻ đều trên-dưới để cân bằng với lưới bên trái */
+.about-education {
+  display: grid;
+  grid-template-rows: auto auto; /* vừa đủ nội dung cho từng thẻ */
+  gap: 1.5rem; /* khớp với khoảng cách lưới bên trái */
+  align-self: center; /* căn giữa khối cột phải theo chiều dọc */
+}
+
+.awards-card {
+  margin-top: 1.5rem;
+  position: static; /* stack below the first card */
+}
+
+/* Soft skills */
+.softskills-card {
+  margin-top: 1rem;
+}
+
+.softskills-list {
+  margin: 0;
+  padding-left: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.softskills-item {
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+/* refine spacing for achievements grid */
+.about-stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+
+@media (max-width: 1024px) {
+  .about-content {
+    grid-template-columns: 1fr; /* xếp dọc ở tablet nhỏ */
+    gap: 2rem;
+  }
+  .about-mid { display: none; }
+  .education-card {
+    position: static;
+  }
+  .about-stats {
+    grid-template-columns: 1fr; /* 1 cột trên tablet để tránh chật */
+  }
 }
 
 .education-card h3 {
   color: var(--primary);
-  margin-bottom: 1.5rem;
-  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  font-size: 1.35rem;
 }
 
 .education-info h4 {
@@ -1143,6 +1287,11 @@ p {
     radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.2) 0%, transparent 50%),
     radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.2) 0%, transparent 50%),
     radial-gradient(circle at 40% 40%, rgba(120, 219, 255, 0.2) 0%, transparent 50%);
+}
+
+/* Ensure consistent readable contrast for hero description in dark mode too */
+.dark .hero-description {
+  color: #e5e7eb;
 }
 
 /* ========= Scrollbar Styling ========= */
