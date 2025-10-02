@@ -4,11 +4,11 @@ import "./styles.css";
 /* ========= DATA: kết hợp từ CV + GitHub ========= */
 const me = {
   name: "Phạm Đức Long",
-  role: "Intern Java Developer • Full-stack Developer",
+  role: "Backend Developer",
   location: "Bát Khối, Long Biên, Hà Nội",
   avatar: "https://github.com/dnclou6.png",
-  bio: "Sinh viên năm 2 chuyên ngành Software Development tại FPT Polytechnic (GPA 3.8/4.0). Đang tìm kiếm cơ hội thực tập Java Backend để áp dụng kiến thức Spring Boot vào hệ thống thực tế. Mục tiêu dài hạn trở thành Senior Backend Developer với kỹ năng thiết kế hệ thống vững chắc.",
-  shortBio: "Passionate Java Developer với kinh nghiệm Full-stack, đang tìm kiếm cơ hội thực tập để phát triển sự nghiệp.",
+  bio: "Tốt nghiệp chuyên ngành Phát triển phần mềm tại FPT Polytechnic (GPA 3.8/4.0). Đang tìm kiếm cơ hội thực tập Java Backend để áp dụng kiến thức Spring Boot vào hệ thống thực tế. Mục tiêu dài hạn trở thành Senior Backend Developer với kỹ năng thiết kế hệ thống vững chắc.",
+  shortBio: "Đang tìm kiếm cơ hội thực tập để phát triển sự nghiệp.",
   links: [
     { label: "GitHub", href: "https://github.com/dnclou6", icon: "🔗" },
     { label: "LinkedIn", href: "https://www.linkedin.com/in/dnclou6", icon: "💼" },
@@ -116,7 +116,7 @@ const me = {
     major: "Software Development",
     gpa: "GPA 3.8/4.0",
     years: "2023 – 2025",
-    status: "Sinh viên năm 2"
+    // status: "Sinh viên năm 2"
   },
   projects: [
     { name: "SOF3022-Java-5-ASM", desc: "Dự án Java OOP với xử lý luồng, cấu trúc dự án và script database", tags: ["Java", "OOP", "SQL"], repo: "https://github.com/dnclou6/SOF3022-Java-5-ASM" },
@@ -128,7 +128,6 @@ const me = {
   achievements: [
     { title: "GPA 3.8/4.0", desc: "Thành tích học tập xuất sắc", icon: "🏆" },
     { title: "4+ Projects", desc: "Dự án thực tế hoàn thành", icon: "💻" },
-    { title: "Full-stack", desc: "Kinh nghiệm toàn diện", icon: "⚡" },
     { title: "AI Integration", desc: "Tích hợp AI trong dự án", icon: "🤖" }
   ]
 };
@@ -484,7 +483,7 @@ export default function App() {
                 <div className="education-info">
                   <h4>{me.education.school}</h4>
                   <p className="education-major">{me.education.major}</p>
-                  <p className="education-years">{me.education.years} • {me.education.status}</p>
+                  <p className="education-years">{me.education.years}</p>
                   <p className="education-gpa">{me.education.gpa}</p>
                 </div>
               </div>
