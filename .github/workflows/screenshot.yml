@@ -1,0 +1,38 @@
+name: Build and Capture Screenshot
+
+on:
+  workflow_dispatch:
+
+jobs:
+  screenshot:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Install tools for preview and puppeteer
+        run: |
+          npm i -D http-server puppeteer@22 node-fetch@3
+
+      - name: Capture screenshot
+        run: node scripts/screenshot.js
+
+      - name: Upload screenshot artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: site-screenshots
+          path: screenshots/
+
+

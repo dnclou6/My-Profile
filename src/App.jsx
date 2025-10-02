@@ -8,8 +8,9 @@ import "./styles.css";
 const me = {
   name: "Phạm Đức Long",
   role: "Backend Developer",
-  location: "Bát Khối, Long Biên, Hà Nội",
+  location: "Long Biên, Hà Nội",
   avatar: "https://github.com/dnclou6.png",
+  dob: "09/10/2006",
   bio: "Tốt nghiệp chuyên ngành Phát triển phần mềm tại FPT Polytechnic (GPA 3.8/4.0). Đang tìm kiếm cơ hội việc làm Java Backend để áp dụng kiến thức Spring Boot vào hệ thống thực tế. Mục tiêu dài hạn trở thành Senior Backend Developer với kỹ năng thiết kế hệ thống vững chắc.",
   shortBio: "Đang tìm kiếm cơ hội việc làm để phát triển sự nghiệp.",
   links: [
@@ -634,6 +635,20 @@ export default function App() {
               <div className="mid-line"></div>
             </div>
             <div className="about-education">
+              {/* Personal Info Card */}
+              <div className="education-card personal-card">
+                <h3>👤 Thông tin cá nhân</h3>
+                <ul className="personal-list">
+                  <li>
+                    <span className="label">Ngày sinh</span>
+                    <span className="value">{me.dob}</span>
+                  </li>
+                  <li>
+                    <span className="label">Địa chỉ</span>
+                    <span className="value">{me.location}</span>
+                  </li>
+                </ul>
+              </div>
               <div className="education-card">
                 <h3>🎓 Học vấn</h3>
                 <div className="education-info">
