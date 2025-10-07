@@ -313,7 +313,7 @@ export default function App() {
   const [isDark, setIsDark] = useDarkMode();
   const [activeSection, setActiveSection] = useState('home');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [formData, setFormData] = useState({ name: '', email: '', message: '' });
+  const [formData, setFormData] = useState({ name: '', message: '' });
   const [isFormSubmitted, setIsFormSubmitted] = useState(false);
   const [visibleSections, setVisibleSections] = useState(new Set(['home']));
   const [cvPdfUrl, setCvPdfUrl] = useState('');
@@ -468,9 +468,10 @@ export default function App() {
   // Handle form submission
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    const subject = encodeURIComponent(`Liên hệ từ portfolio: ${formData.name}`);
-    const body = encodeURIComponent(`Tên: ${formData.name}\nEmail: ${formData.email}\nNội dung:\n${formData.message}`);
-    window.location.href = `mailto:${me.contactEmail}?subject=${subject}&body=${body}`;
+    const to = 'phdlong2006@gmail.com';
+    const subject = encodeURIComponent(`Họ và tên: ${formData.name}`);
+    const body = encodeURIComponent(`Nội dung tin nhắn:\n${formData.message}`);
+    window.location.href = `mailto:${to}?subject=${subject}&body=${body}`;
     setIsFormSubmitted(true);
     setTimeout(() => setIsFormSubmitted(false), 3000);
   };
@@ -798,15 +799,7 @@ export default function App() {
                   required
                 />
               </div>
-              <div className="form-group">
-                <input
-                  type="email"
-                  placeholder="Email"
-                  value={formData.email}
-                  onChange={(e) => setFormData({...formData, email: e.target.value})}
-                  required
-                />
-              </div>
+              
               <div className="form-group">
                 <textarea
                   placeholder="Nội dung tin nhắn"
