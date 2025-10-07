@@ -327,40 +327,71 @@ export default function App() {
   console.log('Projects data:', me.spotlight);
   console.log('Visible sections:', visibleSections);
 
-  // Simple visibility tracking
+  const sections = ['home', 'about', 'skills', 'projects', 'experience', 'contact'];
+
+  // Smooth visibility + active tracking with rAF throttle (prevents scroll jank)
   useEffect(() => {
-    const handleScroll = () => {
-      const sections = ['about', 'skills', 'projects', 'experience'];
-      const newVisibleSections = new Set(['home']);
-      
-      sections.forEach(sectionId => {
-        const element = document.getElementById(sectionId);
-        if (element) {
-          const rect = element.getBoundingClientRect();
-          if (rect.top < window.innerHeight && rect.bottom > 0) {
-            newVisibleSections.add(sectionId);
-          }
-        }
+    let isTicking = false;
+    const onScroll = () => {
+      if (isTicking) return;
+      isTicking = true;
+      requestAnimationFrame(() => {
+        const trackIds = ['about', 'skills', 'projects', 'experience'];
+        const newVisible = new Set(['home']);
+        trackIds.forEach(id => {
+          const el = document.getElementById(id);
+          if (!el) return;
+          const rect = el.getBoundingClientRect();
+          if (rect.top < window.innerHeight && rect.bottom > 0) newVisible.add(id);
+        });
+        setVisibleSections(prev => {
+          // Avoid unnecessary state updates
+          const equal = prev.size === newVisible.size && [...prev].every(v => newVisible.has(v));
+          return equal ? prev : newVisible;
+        });
+
+        // Active section detection handled by IntersectionObserver below
+        isTicking = false;
       });
-      
-      setVisibleSections(newVisibleSections);
     };
 
-    window.addEventListener('scroll', handleScroll);
-    handleScroll(); // Check initial state
-    
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+    return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  const sections = ['home', 'about', 'skills', 'projects', 'experience', 'contact'];
+  // IntersectionObserver for progressive active highlight (1→2→3→4→5)
+  useEffect(() => {
+    const options = { root: null, rootMargin: '-20% 0px -60% 0px', threshold: 0.01 };
+    const obs = new IntersectionObserver((entries) => {
+      // Sort by viewport order (top-most first)
+      const visible = entries
+        .filter(e => e.isIntersecting)
+        .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
+      if (visible.length === 0) return;
+      const topMost = visible[0].target.id;
+      // Allow updates even during programmatic scroll to show 2→3→4 progression
+      setActiveSection(prev => (prev === topMost ? prev : topMost));
+    }, options);
+
+    sections.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) obs.observe(el);
+    });
+    return () => obs.disconnect();
+  }, []);
 
   // Smooth scroll to section
   const scrollToSection = (sectionId) => {
     const element = document.getElementById(sectionId);
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-      setActiveSection(sectionId);
+      document.documentElement.classList.add('smooth-scrolling');
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
       setIsMenuOpen(false);
+      // Remove marker after scroll finishes (~600ms typical)
+      setTimeout(() => {
+        document.documentElement.classList.remove('smooth-scrolling');
+      }, 800);
     }
   };
 
@@ -444,24 +475,7 @@ export default function App() {
     setTimeout(() => setIsFormSubmitted(false), 3000);
   };
 
-  // Update active section on scroll
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollPos = window.scrollY + 100;
-      sections.forEach(section => {
-        const element = document.getElementById(section);
-        if (element) {
-          const { offsetTop, offsetHeight } = element;
-          if (scrollPos >= offsetTop && scrollPos < offsetTop + offsetHeight) {
-            setActiveSection(section);
-          }
-        }
-      });
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  // (Removed duplicate active tracking; merged into rAF throttled handler above)
 
   return (
     <div className={`app ${isDark ? 'dark' : ''}`}>
@@ -478,7 +492,11 @@ export default function App() {
               <button
                 key={section}
                 className={`nav-link ${activeSection === section ? 'active' : ''}`}
-                onClick={() => scrollToSection(section)}
+                onClick={(e) => {
+                  e.currentTarget.classList.add('suppress-dot');
+                  scrollToSection(section);
+                  setTimeout(() => e.currentTarget.classList.remove('suppress-dot'), 800);
+                }}
               >
                 {section === 'home' ? '🏠 Home' :
                  section === 'about' ? '👨‍💻 About' :

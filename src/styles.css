@@ -44,6 +44,25 @@ html {
   font-size: 16px;
 }
 
+/* Ensure sections stop below the fixed navbar to prevent jump/overlap */
+#about,
+#skills,
+#projects,
+#experience,
+#contact {
+  scroll-margin-top: 80px;
+}
+
+@media (max-width: 768px) {
+  #about,
+  #skills,
+  #projects,
+  #experience,
+  #contact {
+    scroll-margin-top: 88px; /* matches mobile navbar height */
+  }
+}
+
 body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   line-height: 1.6;
@@ -230,6 +249,10 @@ p {
   height: 6px;
   background: var(--primary);
   border-radius: 50%;
+}
+/* Hide the active dot only for the clicked item during programmatic scroll */
+.nav-link.suppress-dot.active::after {
+  display: none;
 }
 
 .nav-controls {
